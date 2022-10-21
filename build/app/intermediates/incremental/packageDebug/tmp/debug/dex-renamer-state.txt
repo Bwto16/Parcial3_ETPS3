@@ -1,0 +1,4 @@
+#Fri Oct 21 02:31:16 CST 2022
+base.0=C\:\\src\\proyectos\\parcial3_etps3\\build\\app\\intermediates\\dex\\debug\\mergeDexDebug\\classes.dex
+renamed.0=classes.dex
+path.0=classes.dex
