@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:cached_network_image/cached_network_image.dart';
-
+import 'package:carousel_slider/carousel_slider.dart';
 import 'detalleanime.dart';
 
 class Home extends StatefulWidget {
@@ -14,6 +14,10 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+
+    List<String> imageList = ['https://i.pinimg.com/564x/24/9f/02/249f0231843fddb6c2efeaec438cef0e.jpg'
+    ,'https://i.pinimg.com/564x/5c/e5/f5/5ce5f513c0861a2a68aca16dbc078dea.jpg'];
+
  var AnimeApi =
       "https://api.jikan.moe/v4/top/anime";
   List anime = [];
@@ -22,23 +26,34 @@ class _HomeState extends State<Home> {
     var ancho = MediaQuery.of(context).size.width;
     var alto = MediaQuery.of(context).size.height;
     return Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: Color.fromARGB(255, 104, 100, 100),
         body: Stack(
           children: [
             Positioned(
-              bottom: -50,
-              right: -50,
-              child: Image.asset(
-                "assets/img/pokeball.png",
-                width: 200,
-                fit: BoxFit.fitWidth,
-              ),
+               child: Column(
+              children: <Widget>[
+                SizedBox(height: 10,),
+              CarouselSlider(items: imageList.map((e) => ClipRRect(
+                borderRadius: BorderRadius.circular(6),
+                child: Stack(
+                  fit: StackFit.expand,
+                  children: [
+                    Image.network(e, height:200, width: 100, fit: BoxFit.cover,)
+                  ],
+                ),
+              )).toList(), options: CarouselOptions(
+                autoPlay: true,
+                enableInfiniteScroll: false,
+                enlargeCenterPage: true,
+                height: 120
+              ))
+              ])
             ),
             Positioned(
-              top: 50,
-              left: 20,
+              top: 90,
+              left: 140,
               child: Text(
-                "Pokedex UTEC",
+                "TOP ANIMES",
                 style: TextStyle(
                     fontSize: 30,
                     fontWeight: FontWeight.bold,
@@ -57,7 +72,7 @@ class _HomeState extends State<Home> {
                             crossAxisCount: 2, childAspectRatio: 1.4),
                         itemCount: anime.length,
                         itemBuilder: (context, index) {
-                          var tipo = anime[index]['type'];
+                          var tipo = anime[index]['status'];
 
                           return InkWell(
                             child: Padding(
@@ -65,20 +80,11 @@ class _HomeState extends State<Home> {
                                   vertical: 4.0, horizontal: 8),
                               child: Container(
                                   decoration: BoxDecoration(
-                                      color: anime[index]['type'] == "TV"
+                                      color: anime[index]['status'] == "Currently Airing"
                                           ? Colors.greenAccent
                                           : Colors.pink,
                                       borderRadius: BorderRadius.all(Radius.circular(20))),
                                   child: Stack(children: [
-                                    Positioned(
-                                      bottom: 10,
-                                      right: 10,
-                                      child: Image.asset(
-                                        "assets/img/pokeball.png",
-                                        height: 50,
-                                        fit: BoxFit.fitHeight,
-                                      ),
-                                    ),
                                     Positioned(
                                         top: 10,
                                         left: 20,
@@ -109,12 +115,22 @@ class _HomeState extends State<Home> {
                                                   BorderRadius.circular(20),
                                               color: Colors.black26),
                                         )),
+                                        Positioned(
+                                        top: 70,
+                                        left: 20,
+                                        child: Text(
+                                          anime[index]['source'],
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 12,
+                                              color: Colors.white),
+                                        )),
                                     Positioned(
                                       bottom: 5,
-                                      right: 5,
+                                      right: 10,
                                       child: CachedNetworkImage(
                                         imageUrl: anime[index]['images']['jpg']['image_url'],
-                                        height: 80,
+                                        height: 115,
                                         fit: BoxFit.fitHeight,
                                       ),
                                     ),
@@ -125,10 +141,10 @@ class _HomeState extends State<Home> {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (_) => DetallePokemon(
-                                          pokemonDetalle: anime[index],
+                                      builder: (_) => detalleanime(
+                                          animedetalle: anime[index],
                                           color: Colors.green,
-                                          idpokemon: index)));
+                                          idanime: index)));
                             },
                           );
                         },
@@ -146,11 +162,11 @@ class _HomeState extends State<Home> {
   void initState() {
     super.initState();
     if (mounted) {
-      detalleanime();
+      datosanime();
     }
   }
 
-  void detalleanime() {
+  void datosanime() {
     var url = Uri.https('api.jikan.moe',
         '/v4/top/anime');
     http.get(url).then((value) {

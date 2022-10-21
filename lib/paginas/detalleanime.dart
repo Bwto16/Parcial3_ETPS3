@@ -1,21 +1,21 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
-class DetallePokemon extends StatefulWidget {
-  final pokemonDetalle;
+class detalleanime extends StatefulWidget {
+  final animedetalle;
   final Color color;
-  final int idpokemon;
+  final int idanime;
 
-  const DetallePokemon(
+  const detalleanime(
       {super.key,
-      required this.pokemonDetalle,
+      required this.animedetalle,
       required this.color,
-      required this.idpokemon});
+      required this.idanime});
   @override
-  State<DetallePokemon> createState() => _DetallePokemonState();
+  State<detalleanime> createState() => _detalleanimeState();
 }
 
-class _DetallePokemonState extends State<DetallePokemon> {
+class _detalleanimeState extends State<detalleanime> {
   @override
   Widget build(BuildContext context) {
     var anchodeta = MediaQuery.of(context).size.width;
@@ -39,11 +39,11 @@ class _DetallePokemonState extends State<DetallePokemon> {
             top: 80,
             left: 20,
             child: Text(
-              widget.pokemonDetalle['name'],
+              widget.animedetalle['title'],
               style: TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
-                  fontSize: 30),
+                  fontSize: 26),
             ),
           ),
           Positioned(
@@ -54,7 +54,7 @@ class _DetallePokemonState extends State<DetallePokemon> {
                   padding: const EdgeInsets.only(
                       left: 8.0, right: 8.0, top: 4.0, bottom: 4.0),
                   child: Text(
-                    widget.pokemonDetalle['type'].join(', '),
+                    widget.animedetalle['status'],
                     style: TextStyle(color: Colors.white),
                   ),
                 ),
@@ -63,15 +63,6 @@ class _DetallePokemonState extends State<DetallePokemon> {
                       Radius.circular(10),
                     ),
                     color: Colors.black26)),
-          ),
-          Positioned(
-            top: altodeta * 0.18,
-            right: -30,
-            child: Image.asset(
-              'assets/img/pokeball.png',
-              height: 200,
-              fit: BoxFit.fitHeight,
-            ),
           ),
           Positioned(
             bottom: 0,
@@ -107,7 +98,7 @@ class _DetallePokemonState extends State<DetallePokemon> {
                               Container(
                                   width: anchodeta * 0.3,
                                   child: Text(
-                                    widget.pokemonDetalle['name'],
+                                    widget.animedetalle['title'],
                                     style: TextStyle(
                                         color: Colors.black,
                                         fontSize: 18,
@@ -123,17 +114,17 @@ class _DetallePokemonState extends State<DetallePokemon> {
                               Container(
                                   width: anchodeta * 0.3,
                                   child: Text(
-                                    "Altura :",
+                                    "Nombre en Japones :",
                                     style: TextStyle(
                                         color: Colors.blueGrey, fontSize: 16),
                                   )),
                               Container(
-                                  width: anchodeta * 0.3,
+                                  width: anchodeta * 0.5,
                                   child: Text(
-                                    widget.pokemonDetalle['height'],
+                                    widget.animedetalle['title_japanese'],
                                     style: TextStyle(
                                         color: Colors.black,
-                                        fontSize: 20,
+                                        fontSize: 18,
                                         fontWeight: FontWeight.bold),
                                   )),
                             ]),
@@ -146,17 +137,17 @@ class _DetallePokemonState extends State<DetallePokemon> {
                               Container(
                                   width: anchodeta * 0.3,
                                   child: Text(
-                                    "Anchura :",
+                                    "Enlace :",
                                     style: TextStyle(
                                         color: Colors.blueGrey, fontSize: 16),
                                   )),
                               Container(
-                                  width: anchodeta * 0.3,
+                                  width: anchodeta * 0.5,
                                   child: Text(
-                                    widget.pokemonDetalle['weight'],
+                                    widget.animedetalle['url'],
                                     style: TextStyle(
                                         color: Colors.black,
-                                        fontSize: 20,
+                                        fontSize: 15,
                                         fontWeight: FontWeight.bold),
                                   )),
                             ]),
@@ -167,18 +158,19 @@ class _DetallePokemonState extends State<DetallePokemon> {
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               Container(
+                                 width: anchodeta * 0.3,
                                   child: Text(
-                                "Spawn Time :",
+                                "Duracion :",
                                 style: TextStyle(
                                     color: Colors.blueGrey, fontSize: 18),
                               )),
                               Container(
-                                  width: anchodeta * 0.3,
+                                  width: anchodeta * 0.5,
                                   child: Text(
-                                    widget.pokemonDetalle['spawn_time'],
+                                    widget.animedetalle['duration'],
                                     style: TextStyle(
                                         color: Colors.black,
-                                        fontSize: 20,
+                                        fontSize: 16,
                                         fontWeight: FontWeight.bold),
                                   )),
                             ]),
@@ -189,63 +181,30 @@ class _DetallePokemonState extends State<DetallePokemon> {
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               Container(
+                                 width: anchodeta * 0.3,
                                   child: Text(
-                                "Weaknesses :",
+                                "Generos :",
                                 style: TextStyle(
                                     color: Colors.blueGrey, fontSize: 18),
                               )),
                               Container(
+                                width: anchodeta * 0.2,
                                   child: Text(
-                                widget.pokemonDetalle['weaknesses'].join(", "),
+                                widget.animedetalle['genres'][0]['name'],
                                 style: TextStyle(
                                     color: Colors.black,
-                                    fontSize: 16,
+                                    fontSize: 14,
                                     fontWeight: FontWeight.bold),
                               )),
-                            ]),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
                               Container(
+                                width: anchodeta * 0.2,
                                   child: Text(
-                                "Evolucion :",
-                                style: TextStyle(
-                                    color: Colors.blueGrey, fontSize: 18),
-                              )),
-                              SizedBox(
-                                height: 20,
-                                width: anchodeta * 0.55,
-                                child: ListView.builder(
-                                  scrollDirection: Axis.horizontal,
-                                  itemCount: widget
-                                      .pokemonDetalle['next_evolution'].length,
-                                  itemBuilder: ((context, index) {
-                                    return Padding(
-                                      padding:
-                                          const EdgeInsets.only(right: 8.0),
-                                      child: Text(
-                                          widget.pokemonDetalle[
-                                              'next_evolution'][index]['name'],
-                                          style: TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.bold)),
-                                    );
-                                  }),
-                                ),
-                              ),
-                              /* Container(
-                                  child: Text(
-                                widget.pokemonDetalle['next_evolution']
-                                    .join(", "),
+                                widget.animedetalle['genres'][1]['name'],
                                 style: TextStyle(
                                     color: Colors.black,
-                                    fontSize: 16,
+                                    fontSize: 14,
                                     fontWeight: FontWeight.bold),
-                              )),*/
+                              )),
                             ]),
                       ),
                     ]),
@@ -254,10 +213,10 @@ class _DetallePokemonState extends State<DetallePokemon> {
           ),
           Positioned(
             top: (altodeta * 0.18) - 10,
-            left: (altodeta / 2) - 180,
+            left: (altodeta / 2) - 240,
             child: CachedNetworkImage(
-                imageUrl: widget.pokemonDetalle['img'],
-                height: 150,
+                imageUrl: widget.animedetalle['images']['jpg']['image_url'],
+                height: 230,
                 fit: BoxFit.fitHeight),
           )
         ],
